@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ ENV_PATH=$(poetry env info --path)
+ if [ -d "$ENV_PATH" ]; then
+     echo "Using the existing poetry environment at $ENV_PATH."
+     source $ENV_PATH/bin/activate  # 激活虚拟环境
+ else
+    echo "No existing poetry environment found."
+    echo "Creating a new poetry environment."
+    poetry install --extras benchmark  # 安装新的包并创建虚拟环境
+ fi
+
+ echo "Setup completed successfully."
+ exit 0

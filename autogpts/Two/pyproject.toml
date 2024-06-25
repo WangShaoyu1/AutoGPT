@@ -28,6 +28,8 @@ agbenchmark = { path = "../../benchmark", optional = true }
 # agbenchmark = {git = "https://github.com/Significant-Gravitas/AutoGPT.git", subdirectory = "benchmark", optional = true}
 webdriver-manager = "^4.0.1"
 google-cloud-storage = "^2.13.0"
+google-api-python-client="^2.130.0"
+jsonschema="*"
 
 [tool.poetry.extras]
 benchmark = ["agbenchmark"]
