@@ -7,7 +7,7 @@ from duckduckgo_search import DDGS
 
 from ..registry import action
 from forge.utils.exceptions import ConfigurationError
-from forge.utils.url_validator import JSONSchema
+from forge.utils.json_schema import JSONSchema
 
 DUCKDUCKGO_MAX_ATTEMPTS = 3
 

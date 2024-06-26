@@ -1,6 +1,9 @@
 import json
 import os
 import time
+
+from agent_protocol_client.models import step
+
 from forge.actions import ActionRegister
 from forge.sdk import (
     Agent,
@@ -16,7 +19,7 @@ from forge.sdk import (
 LOG = ForgeLogger(__name__)
 
 from .sdk import PromptEngine, chat_completion_request
-from forge.utils import util
+from forge.utils import util, log
 
 
 class ForgeAgent(Agent):
@@ -185,14 +188,25 @@ class ForgeAgent(Agent):
             # Some action don`t need action,here you can do many thing
 
             if ability["name"] not in self.abilities.list_abilities().keys():
-                step.output = answer["thoughts"]["text"]
+                step.output = answer["thoughts"]["speak"]
             else:
                 output = await self.abilities.run_action(
                     task_id, ability["name"], **ability["args"]
                 )
                 print(f"agent-output is:{output}")
                 # Set the step output to the "speak" part of the answer
-                step.output = answer["thoughts"]["speak"]
+                step.output = output
+
+            step = await self.db.update_step(
+                task_id=task_id,
+                step_id=step.step_id,
+                status="completed",
+                output=step.output,
+            )
+
+            log.log_execution_time(task_id=step.task_id, step_id=step.step_id, question=step_request.input,
+                                   answer=step.output, chat_completion_kwargs=chat_completion_kwargs,
+                                   log_file="./temp_data_dir/execution_log.log")
 
         except json.JSONDecodeError as e:
             # Handle JSON decoding errors

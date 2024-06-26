@@ -108,10 +108,16 @@ class ActionRegister:
         for action_path in glob.glob(
                 os.path.join(os.path.dirname(__file__), "**/*.py"), recursive=True
         ):
+            file_system_py = [os.path.basename(file) for file in
+                              glob.glob(os.path.join(os.path.dirname(__file__), "file_system", "*.py"))];
+            web_py = [os.path.basename(file) for file in
+                      glob.glob(os.path.join(os.path.dirname(__file__), "web", "*.py"))];
+
             if not os.path.basename(action_path) in [
                 "__init__.py",
                 "registry.py",
-            ]:
+                "finish.py"
+            ] + file_system_py + web_py:
                 action = os.path.relpath(
                     action_path, os.path.dirname(__file__)
                 ).replace("/", ".")

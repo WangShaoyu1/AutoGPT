@@ -183,7 +183,7 @@ class BrowsingError(CommandExecutionError):
 
 @action(
     name="read_webpage",
-    description="Read a webpage, and extract specific information from it if a question is specified. If you are looking to extract specific information from the webpage, you should specify a question.",
+    description="Read a webpage from Chinese website, and extract specific information from it if a question is specified. If you are looking to extract specific information from the webpage, you should specify a question.",
     parameters=[
         {
             "name": "url",
